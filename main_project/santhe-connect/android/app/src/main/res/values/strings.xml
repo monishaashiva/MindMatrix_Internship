@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Santhe-Connect</string>
+    <string name="title_activity_main">Santhe-Connect</string>
+    <string name="package_name">com.santheconnect.app</string>
+    <string name="custom_url_scheme">com.santheconnect.app</string>
+    <string name="default_web_client_id">1073416626450-7s1nvtrr79cpbpk0acdm4g7lemb8g9qc.apps.googleusercontent.com</string>
+</resources>

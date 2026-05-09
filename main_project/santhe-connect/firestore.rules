@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+
+    // Entity Validations
+    function isValidSanthe(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.village is string && data.village.size() > 0 &&
+             data.dayOfWeek in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] &&
+             data.coordinates.lat is number && data.coordinates.lng is number;
+    }
+
+    function isValidEatery(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.type in ['hotel', 'homestay', 'pop-up', 'mess'] &&
+             data.coordinates.lat is number && data.coordinates.lng is number;
+    }
+
+    function isValidReview(data) {
+      return (data.userId == request.auth.uid || data.userId == 'system') &&
+             data.type in ['voice', 'photo', 'text'] &&
+             data.content is string && data.content.size() > 0 &&
+             data.userName is string && data.userName.size() > 0;
+    }
+
+    // Santhes Collection
+    match /santhes/{santheId} {
+      allow read: if true;
+      allow create: if isVerified() && isValidSanthe(incoming()) && (incoming().addedBy == request.auth.uid || incoming().addedBy == 'system');
+      allow update: if isVerified() && (
+        existing().addedBy == request.auth.uid && isValidSanthe(incoming()) &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'village', 'dayOfWeek', 'coordinates', 'description', 'specialties', 'hasPhoto', 'hasVoice'])
+      );
+      allow delete: if isVerified() && existing().addedBy == request.auth.uid;
+    }
+
+    // Eateries Collection
+    match /eateries/{eateryId} {
+      allow read: if true;
+      allow create: if isVerified() && isValidEatery(incoming()) && (incoming().addedBy == request.auth.uid || incoming().addedBy == 'system');
+      allow update: if isVerified() && (
+        existing().addedBy == request.auth.uid && isValidEatery(incoming()) &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'type', 'village', 'specialty', 'coordinates', 'description', 'imageUrl'])
+      );
+      allow delete: if isVerified() && existing().addedBy == request.auth.uid;
+    }
+
+    // Reviews Collection
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isVerified() && isValidReview(incoming());
+      allow delete: if isVerified() && existing().userId == request.auth.uid;
+    }
+  }
+}

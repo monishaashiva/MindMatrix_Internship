@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1073416626450",
+    "project_id": "santheconnect-495108",
+    "storage_bucket": "santheconnect-495108.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073416626450:android:3d714369b76267e014d3cb",
+        "android_client_info": {
+          "package_name": "com.santheconnect.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073416626450-49ukvo82ejheuti4otfvqc2vlui4mhtq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santheconnect.app",
+            "certificate_hash": "f4dd490c66ef59d14dd244342e0a66534b3a0d8d"
+          }
+        },
+        {
+          "client_id": "1073416626450-7s1nvtrr79cpbpk0acdm4g7lemb8g9qc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvGgkFX1161QRYwEOuhunx4ObANUlgycM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073416626450-7s1nvtrr79cpbpk0acdm4g7lemb8g9qc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "SantheConnect | ಸಂತೆ ಕನೆಕ್ಟ್",
+  "description": "A digital bridge for discovering Karnataka's local flavors, weekly markets (Santhes), and authentic eateries.",
+  "requestFramePermissions": ["geolocation", "camera", "microphone"],
+  "majorCapabilities": ["AI Recommendations", "Real-time Maps", "Community Reviews"]
+}

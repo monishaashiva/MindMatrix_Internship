@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "Santhe": {
+      "title": "Santhe",
+      "description": "Weekly community market",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "village": { "type": "string" },
+        "dayOfWeek": { "type": "string", "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "description": { "type": "string" },
+        "specialties": { "type": "array", "items": { "type": "string" } },
+        "addedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "village", "dayOfWeek", "coordinates"]
+    },
+    "Eatery": {
+      "title": "Eatery",
+      "description": "Local food joint or home-stay",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["hotel", "homestay", "pop-up", "mess"] },
+        "village": { "type": "string" },
+        "specialty": { "type": "string" },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "addedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type", "village", "coordinates"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Tourist voice note or photo review",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "targetId": { "type": "string", "description": "ID of the Santhe or Eatery" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "type": { "type": "string", "enum": ["voice", "photo", "text"] },
+        "content": { "type": "string" },
+        "mediaUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["targetId", "userId", "type"]
+    }
+  },
+  "firestore": {
+    "santhes": {
+      "schema": "Santhe",
+      "description": "Collection of weekly markets"
+    },
+    "eateries": {
+      "schema": "Eatery",
+      "description": "Collection of local food spots"
+    },
+    "reviews": {
+      "schema": "Review",
+      "description": "Collection of user reviews"
+    }
+  }
+}
